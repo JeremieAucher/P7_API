@@ -52,8 +52,11 @@ def helloworld():
 
 ### Déclaration des fonctions - Start ###
 
+# def loadModel():
+#     return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
+
 def loadModel():
-    return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
+    return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
 
 # def getTheIDX(data,value,columnName='SK_ID_CURR'):
 #     '''
