@@ -44,6 +44,10 @@ def test():
     language = request.args.get('language')
     return '''<h1>The language value is: {}</h1>'''.format(language)
 
+@app.route('/')
+def helloworld():
+    return ''''<h1>Hello World!</h1>'''
+
 ### app.route - End ###
 
 ### Déclaration des fonctions - Start ###
