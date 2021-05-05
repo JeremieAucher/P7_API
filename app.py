@@ -63,7 +63,7 @@ def lightgbm():
     # Réccupération des données
     data = request.args.get('data')
     
-    return modelPredict(data)
+    return modelPredict(data.reshape(-1, 1))
     
     # predExact, predProba = modelPredict(data)
     # return jsonify({
