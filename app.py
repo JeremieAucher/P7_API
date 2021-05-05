@@ -84,6 +84,13 @@ def test2():
     language = request.args.get('language')
     return jsonify(language)
 
+@app.route('/test3/')
+def test3():    
+    # Réccupération des données
+    data = request.args.get('data')
+    
+    return type(data)
+
 @app.route('/')
 def helloworld():
     return '''<h1>Hello World!</h1>'''
