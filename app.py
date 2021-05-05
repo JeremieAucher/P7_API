@@ -20,6 +20,40 @@ model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
 threshold = 0.50
 #####################
 
+### Déclaration des fonctions - Start ###
+
+# def loadModel():
+#     return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
+
+# def loadModel():
+#     return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
+
+# def getTheIDX(data,value,columnName='SK_ID_CURR'):
+#     '''
+#     Retourne l'index correspondant à la 1ère valeur contenue dans value
+#     contenue dans la colonne columnName du Dataframe data.
+#     ''' 
+#     return data[data[columnName] == value].index[0]
+
+def modelPredict(data):
+    '''
+        Retourne la prédiction du modèle: 0 ou 1 en fonction du seuil
+        ainsi que la valeur exact de probabilité donné par le modèle.
+    '''
+    # idx = getTheIDX(data=data,columnName=loanColumn,value=loanNumber)
+    # resultModel = model.predict_proba(data[data.index == idx])[:,1]
+    
+    predExact = model.predict_proba(data)[:,1]
+    predProba = np.where(predExact<threshold,0,1)[0]
+    
+    return jsonify({
+            'predExact':predExact,
+            'predProba':predProba
+            
+        })
+
+### Déclaration des fonctions - End ###
+
 ### app.route - Start ###
 @app.route('/lightgbm/')
 def lightgbm():
@@ -56,39 +90,7 @@ def helloworld():
 
 ### app.route - End ###
 
-### Déclaration des fonctions - Start ###
 
-# def loadModel():
-#     return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
-
-# def loadModel():
-#     return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
-
-# def getTheIDX(data,value,columnName='SK_ID_CURR'):
-#     '''
-#     Retourne l'index correspondant à la 1ère valeur contenue dans value
-#     contenue dans la colonne columnName du Dataframe data.
-#     ''' 
-#     return data[data[columnName] == value].index[0]
-
-def modelPredict(data):
-    '''
-        Retourne la prédiction du modèle: 0 ou 1 en fonction du seuil
-        ainsi que la valeur exact de probabilité donné par le modèle.
-    '''
-    # idx = getTheIDX(data=data,columnName=loanColumn,value=loanNumber)
-    # resultModel = model.predict_proba(data[data.index == idx])[:,1]
-    
-    predExact = model.predict_proba(data)[:,1]
-    predProba = np.where(predExact<threshold,0,1)[0]
-    
-    return jsonify({
-            'predExact':predExact,
-            'predProba':predProba
-            
-        })
-
-### Déclaration des fonctions - End ###
 
 
 # app.run()
