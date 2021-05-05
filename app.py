@@ -44,9 +44,15 @@ def test():
     language = request.args.get('language')
     return '''<h1>The language value is: {}</h1>'''.format(language)
 
+@app.route('/test2/')
+def test2():
+    # if doesn't exist, returns None
+    language = request.args.get('language')
+    return jsonify(language)
+
 @app.route('/')
 def helloworld():
-    return ''''<h1>Hello World!</h1>'''
+    return '''<h1>Hello World!</h1>'''
 
 ### app.route - End ###
 
