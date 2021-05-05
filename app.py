@@ -16,7 +16,7 @@ import os
 
 ### Initialisation ###
 app = Flask(__name__)
-model = loadModel()
+model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
 threshold = 0.50
 #####################
 
@@ -55,8 +55,8 @@ def helloworld():
 # def loadModel():
 #     return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
 
-def loadModel():
-    return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
+# def loadModel():
+#     return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
 
 # def getTheIDX(data,value,columnName='SK_ID_CURR'):
 #     '''
