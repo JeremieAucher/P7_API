@@ -43,13 +43,12 @@ def modelPredict(data):
     # idx = getTheIDX(data=data,columnName=loanColumn,value=loanNumber)
     # resultModel = model.predict_proba(data[data.index == idx])[:,1]
     
-    predExact = model.predict_proba(data)[:,1]
-    predProba = np.where(predExact<threshold,0,1)[0]
+    predProba = model.predict_proba(data)[:,1]
+    predExact = np.where(predProba<threshold,0,1)[0]
     
     return jsonify({
-            'predExact':predExact,
-            'predProba':predProba
-            
+            'predProba':predProba,
+            'predExact':predExact
         })
 
 ### Déclaration des fonctions - End ###
@@ -63,7 +62,7 @@ def lightgbm():
     # Réccupération des données
     data = request.args.get('data')
     
-    return modelPredict(data.reshape(-1, 1))
+    return modelPredict(data)
     
     # predExact, predProba = modelPredict(data)
     # return jsonify({
@@ -75,10 +74,13 @@ def lightgbm():
 @app.route('/api',methods=['POST'])
 def api():
     data = request.get_json(force=True)
-    # prediction = model.predict([[np.array(data['exp'])]])
-    # output = prediction[0]
-    # return jsonify(output)
-    print(f'type-data={type(data)}')
+    data = [[np.array(data)]]
+    return modelPredict(data)
+
+@app.route('/api2',methods=['POST'])
+def api2():
+    data = request.get_json(force=True)
+    data = np.array(data)
     return modelPredict(data)
 
 @app.route('/test/')
