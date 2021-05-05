@@ -72,6 +72,15 @@ def lightgbm():
             
     #     })
 
+@app.route('/api',methods=['POST'])
+def api():
+    data = request.get_json(force=True)
+    # prediction = model.predict([[np.array(data['exp'])]])
+    # output = prediction[0]
+    # return jsonify(output)
+    print(f'type-data={type(data)}')
+    return modelPredict(data)
+
 @app.route('/test/')
 def test():
     # if doesn't exist, returns None
