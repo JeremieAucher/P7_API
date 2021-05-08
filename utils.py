@@ -28,7 +28,8 @@ def modelPredict(model, data, threshold):
         )
 
 def loadModelLightGBM(formatFile='b64'):
-    model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
+    # model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
+    model = pickle.load(open('/pickle/model.pkl', 'rb'))
     
     if formatFile == 'pkl':
         return model
