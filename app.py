@@ -13,7 +13,7 @@ import utils
 
 ### Initialisation ###
 app = Flask(__name__)
-# model = utils.loadModelLightGBM(formatFile='pkl')
+model = utils.loadModelLightGBM(formatFile='pkl')
 threshold = 0.50
 #####################
 
@@ -26,7 +26,7 @@ def lightgbm():
     # # data = pickle.loads(base64.b64decode(data_b64_str.encode()))
     # data = restoreFromB64Str(request.args.get('data_b64_str'))
     # return utils.modelPredict(restoreFromB64Str(request.args.get('data_b64_str')))
-    return utils.modelPredict(utils.restoreFromB64Str(request.args.get('data_b64_str')))
+    return utils.modelPredict(model,utils.restoreFromB64Str(request.args.get('data_b64_str')),threshold)
 
 @app.route('/model/')
 def model():

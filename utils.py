@@ -8,18 +8,22 @@ Created on Thu May  6 19:22:26 2021
 import os
 import pickle
 import base64
+import numpy as np
 
 
-def modelPredict(model, data):
+def modelPredict(model, data, threshold):
     '''
         Retourne la prédiction du modèle: 0 ou 1 en fonction du seuil
         ainsi que la valeur exact de probabilité donné par le modèle.
     '''
     
+    pP = model.predict_proba(data)[:,0].item()
+    pE = int(np.where(pP<threshold,0,1))
+    
     return convToB64(
         dict(
-            predProba = model.predict_proba(data)[:,0].item(),
-            predExact = int(np.where(predProba<threshold,0,1))
+            predProba = pP,
+            predExact = pE
             )
         )
     
