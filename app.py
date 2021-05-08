@@ -8,135 +8,41 @@ Created on Fri Apr 30 23:00:45 2021
 # -*- coding: utf-8 -*-
 
 from flask import Flask, request
-import numpy as np
-# import jsonify
-from flask_jsonpify import jsonify
-import pickle
-import os
+import utils
+# from utils import restoreFromB64Str
 
 ### Initialisation ###
 app = Flask(__name__)
-model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
+# model = utils.loadModelLightGBM(formatFile='pkl')
 threshold = 0.50
 #####################
 
-### Déclaration des fonctions - Start ###
-
-# def loadModel():
-#     return pickle.load(open(os.getcwd()+'\\pickle\\model.pkl', 'rb'))
-
-# def loadModel():
-#     return pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
-
-# def getTheIDX(data,value,columnName='SK_ID_CURR'):
-#     '''
-#     Retourne l'index correspondant à la 1ère valeur contenue dans value
-#     contenue dans la colonne columnName du Dataframe data.
-#     ''' 
-#     return data[data[columnName] == value].index[0]
-
-def modelPredict(data):
-    '''
-        Retourne la prédiction du modèle: 0 ou 1 en fonction du seuil
-        ainsi que la valeur exact de probabilité donné par le modèle.
-    '''
-    # idx = getTheIDX(data=data,columnName=loanColumn,value=loanNumber)
-    # resultModel = model.predict_proba(data[data.index == idx])[:,1]
-    
-    predProba = model.predict_proba(data)[:,1]
-    predExact = np.where(predProba<threshold,0,1)[0]
-    
-    return jsonify({
-            'predProba':predProba,
-            'predExact':predExact
-        })
-
-### Déclaration des fonctions - End ###
-
 ### app.route - Start ###
-@app.route('/lightgbm/')
+@app.route('/lightgbm/',methods=['POST'])
 def lightgbm():
-    # A corriger: il faut envoyer juste une ligne de donné, et non le DF en entier.
-    # La selection de la ligne de donné à envoyer doit être fait avant l'entrée dans la fonction modelPredict.
+    # # Réccupération des données
+    # data_b64_str = request.args.get('data_b64_str')
+    # # Réencodage des données au format Pandas
+    # # data = pickle.loads(base64.b64decode(data_b64_str.encode()))
+    # data = restoreFromB64Str(request.args.get('data_b64_str'))
+    # return utils.modelPredict(restoreFromB64Str(request.args.get('data_b64_str')))
+    return utils.modelPredict(utils.restoreFromB64Str(request.args.get('data_b64_str')))
+
+@app.route('/model/')
+def model():
+    return utils.loadModelLightGBM(formatFile='b64')
     
-    # Réccupération des données
-    data = request.args.get('data')
-    
-    return modelPredict(data)
-    
-    # predExact, predProba = modelPredict(data)
-    # return jsonify({
-    #         'predExact':predExact,
-    #         'predProba':predProba
-            
-    #     })
-
-@app.route('/api',methods=['POST'])
-def api():
-    data = request.get_json(force=True)
-    data = [[np.array(data)]]
-    return modelPredict(data)
-
-@app.route('/api2',methods=['POST'])
-def api2():
-    data = request.get_json(force=True)
-    data = np.array(data)
-    return modelPredict(data)
-
-@app.route('/test/')
-def test():
-    # if doesn't exist, returns None
-    language = request.args.get('language')
-    return '''<h1>The language value is: {}</h1>'''.format(language)
-
-@app.route('/test2/')
-def test2():
-    # if doesn't exist, returns None
-    language = request.args.get('language')
-    return jsonify(language)
-
-@app.route('/test3/')
-def test3():    
-    # Réccupération des données
-    data = request.args.get('data')
-    
-    return type(data)
+@app.route('/threshold/')
+def threshold():
+    return threshold
 
 @app.route('/')
 def helloworld():
-    return '''<h1>Hello World!</h1>'''
+    return '''<h1>Bienvenue sur la partie API du P7 DataScientist d'OpenClassrooms'</h1>'''
 
 ### app.route - End ###
 
-
-
-
-# app.run()
-
-
-# from flask import Flask, render_template, jsonify
-# import json
-# import requests
-
-# app = Flask(__name__)
-
-# # METEO_API_KEY = "c30c785207dc7f397b5c036ba5fc70xx"
-
-# # if METEO_API_KEY is None:
-# #     # URL de test :
-# #     METEO_API_URL = "https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx"
-# # else: 
-# #     # URL avec clé :
-# #     METEO_API_URL = "https://api.openweathermap.org/data/2.5/forecast?lat=48.883587&lon=2.333779&appid=" + METEO_API_KEY
-
-# @app.route("/")
-# def hello():
-#     return "Hello World!"
-
-# @app.route('/dashboard/')
-# def dashboard():
-#     return render_template("dashboard.html")
-
 if __name__ == "__main__":
-    # app.run(debug=True)
     app.run()
+    
+# ImportError: cannot import name 'restoreFromB64Str' from 'utils' (E:\OneDrive\Documents\Formation_DataScientist_OpenClassroom\P7_\Dashboard-Streamlit\utils.py)
