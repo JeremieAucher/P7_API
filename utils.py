@@ -5,10 +5,11 @@ Created on Thu May  6 19:22:26 2021
 @author: waldu
 """
 
-import os
+# import os
 import pickle
 import base64
 import numpy as np
+import urllib.request
 
 
 def modelPredict(model, data, threshold):
@@ -29,8 +30,9 @@ def modelPredict(model, data, threshold):
 
 def loadModelLightGBM(formatFile='b64'):
     # model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    model = pickle.load(open(dir_path+'/pickle/model.pkl', 'rb'))
+    # dir_path = os.path.dirname(os.path.realpath(__file__))
+    # model = pickle.load(open(dir_path+'/pickle/model.pkl', 'rb'))
+    model = pickle.load(urllib.request.urlopen("https://p7-api-public.s3.eu-west-3.amazonaws.com/model.pkl"))
     
     if formatFile == 'pkl':
         return model
