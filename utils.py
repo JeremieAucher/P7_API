@@ -26,11 +26,6 @@ def modelPredict(model, data, threshold):
             predExact = pE
             )
         )
-    
-    # return {
-    #     'predProba':predProba,
-    #     'predExact':predExact
-    #     }
 
 def loadModelLightGBM(formatFile='b64'):
     model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
