@@ -29,6 +29,10 @@ def model():
 def test():
     return f'''{utils.loadModelLightGBM(formatFile='xxx')}'''
 
+@app.route('/test2/')
+def test2():
+    return '''The scikit-learn version is {sklearn.__version__}'''
+
 @app.route('/threshold/',methods=['POST'])
 def threshold():
     return utils.convToB64(th)
