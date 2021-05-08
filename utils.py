@@ -34,7 +34,6 @@ def loadModelLightGBM(formatFile='b64'):
     if formatFile == 'pkl':
         return model
     elif formatFile == 'b64':
-        print('AAAAAAAA')
         return convToB64(model)
     else:
         return 0
