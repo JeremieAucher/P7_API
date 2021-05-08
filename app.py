@@ -24,7 +24,11 @@ def lightgbm():
 @app.route('/model/',methods=['POST'])
 def model():
     return utils.loadModelLightGBM(formatFile='b64')
-    
+
+@app.route('/test/')
+def test():
+    return f'''{utils.loadModelLightGBM(formatFile='xxx')}'''
+
 @app.route('/threshold/',methods=['POST'])
 def threshold():
     return utils.convToB64(th)

@@ -39,7 +39,7 @@ def loadModelLightGBM(formatFile='b64'):
     elif formatFile == 'b64':
         return convToB64(model)
     else:
-        return 0
+        return model.class_weight
         
 def convToB64(data):
     return base64.b64encode(pickle.dumps(data)).decode('utf-8')
