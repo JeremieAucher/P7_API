@@ -19,8 +19,8 @@ th = 0.50 # Named th because a function named threshold already exists
 ### app.route - Start ###
 @app.route('/lightgbm/',methods=['POST'])
 def lightgbm():
-    # return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
-    return request.args.get('data_b64_str')
+    return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
+    # return request.args.get('data_b64_str')
 
 @app.route('/abc/',methods=['POST'])
 def abc():
@@ -34,13 +34,14 @@ def wxc():
 def qsd():
     return utils.modelPredict(mo,utils.restoreFromB64Str(request.form.get('qsd_b64_str')),th)
 
-@app.route('/aaa/',methods=['POST'])
+@app.route('/aaa/',methods=['GET'])
 def aaa():
-    return request.form["XXX"]
+    return request.args.get('XXX')
+    
 
 @app.route('/bbb/',methods=['POST'])
 def bbb():
-    return request.args["XXX"]
+    return request.args("XXX")
 
 @app.route('/ccc/',methods=['POST'])
 def ccc():
