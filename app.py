@@ -73,7 +73,6 @@ def endSplit():
     # Intérrogation du model et retour des résultats
     return utils.modelPredict(mo,dfOneCustomer,th)
 
-
 ### app.route - End ###
 
 if __name__ == "__main__":
