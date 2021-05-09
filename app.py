@@ -47,10 +47,6 @@ def ccc():
     return request.values.get('XXX')
 
 
-@app.route('/qsd/',methods=['POST'])
-def qsd():
-    return utils.modelPredict(mo,utils.restoreFromB64Str(request.form.get('qsd_b64_str')),th)
-
 @app.route('/model/',methods=['POST'])
 def model():
     return utils.loadModelLightGBM(formatFile='b64')
