@@ -37,7 +37,6 @@ def qsd():
 @app.route('/aaa/',methods=['GET'])
 def aaa():
     return request.args.get('XXX')
-    
 
 @app.route('/bbb/',methods=['POST'])
 def bbb():
@@ -47,6 +46,9 @@ def bbb():
 def ccc():
     return request.values.get('XXX')
 
+@app.route('/ddd/',methods=['POST'])
+def ddd():
+    return utils.modelPredict(mo,utils.restoreFromB64Str(request.values.get('data_b64_str')),th)
 
 @app.route('/model/',methods=['POST'])
 def model():
