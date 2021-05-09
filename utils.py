@@ -21,14 +21,14 @@ def modelPredict(model, data, threshold):
     pP = model.predict_proba(data)[:,0].item()
     pE = int(np.where(pP<threshold,0,1))
     
-    return convToB64('OKKKKKKKK')
+    # return convToB64('OKKKKKKKK')
     
-    # return convToB64(
-    #     dict(
-    #         predProba = pP,
-    #         predExact = pE
-    #         )
-    #     )
+    return convToB64(
+        dict(
+            predProba = pP,
+            predExact = pE
+            )
+        )
 
 def loadModelLightGBM(formatFile='b64'):
     # model = pickle.load(open('/pickle/model.pkl', 'rb'))

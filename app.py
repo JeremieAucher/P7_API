@@ -19,7 +19,16 @@ th = 0.50 # Named th because a function named threshold already exists
 ### app.route - Start ###
 @app.route('/lightgbm/',methods=['POST'])
 def lightgbm():
-    return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
+    # return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
+    return request.args.get('data_b64_str')
+
+@app.route('/abc/',methods=['POST'])
+def abc():
+    return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('abc_b64_str')),th)
+
+@app.route('/wxc/',methods=['POST'])
+def wxc():
+    return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('wxc_b64_str')),th)
 
 @app.route('/model/',methods=['POST'])
 def model():
