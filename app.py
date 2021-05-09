@@ -28,7 +28,11 @@ def abc():
 
 @app.route('/wxc/',methods=['POST'])
 def wxc():
-    return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('wxc_b64_str')),th)
+    return request.form.get('wxc_b64_str')
+
+@app.route('/qsd/',methods=['POST'])
+def qsd():
+    return utils.modelPredict(mo,utils.restoreFromB64Str(request.form.get('qsd_b64_str')),th)
 
 @app.route('/model/',methods=['POST'])
 def model():
