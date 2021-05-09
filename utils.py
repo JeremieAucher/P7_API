@@ -43,7 +43,10 @@ def loadModelLightGBM(formatFile='b64'):
         return convToB64(model)
     else:
         return model.class_weight
-        
+
+def loadColumnsOfModel():
+    return pickle.load(open(os.getcwd()+'/pickle/cols.pkl', 'rb'))    
+
 def convToB64(data):
     return base64.b64encode(pickle.dumps(data)).decode('utf-8')
 
