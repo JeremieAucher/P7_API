@@ -9,7 +9,6 @@ Created on Fri Apr 30 23:00:45 2021
 
 from flask import Flask, request
 import utils
-import sklearn
 
 ### Initialisation ###
 app = Flask(__name__)
@@ -29,10 +28,6 @@ def model():
 @app.route('/test/')
 def test():
     return f'''{utils.loadModelLightGBM(formatFile='xxx')}'''
-
-@app.route('/test2/')
-def test2():
-    return f'''The scikit-learn version is {sklearn.__version__}'''
 
 @app.route('/threshold/',methods=['POST'])
 def threshold():
