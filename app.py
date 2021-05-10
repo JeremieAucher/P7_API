@@ -49,7 +49,7 @@ def startSplit():
         txtB64Global = ''
         dictTxtB64Split = {}
         print('Hello world!', file=sys.stderr)
-        print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
+        print(f'Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
         return '1'
     except:
     	return '0'
@@ -59,14 +59,14 @@ def splitN():
     global txtB64Global
     global dictTxtB64Split
     print(f'Merge - numSplit={request.values.get("numSplit")}', file=sys.stderr)
-    # print(f'Avant traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
+    print(f'Avant traitement - Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
     # Recept Split n 
     # txtB64Global += request.values.get('txtSplit') # Pas adapté sur Heroku
     n = request.values.get("numSplit")
     print(f'numSplit = {n} --- Type numSplit = {type(n)} --- int(numSplit) = {int(n)} --- Type int(numSplit) = {type(int(n))}')
     dictTxtB64Split[int(request.values.get("numSplit"))] = request.values.get('txtSplit')
     
-    print(f'Après traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
+    print(f'Après traitement - Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
     return '1'
 
 @app.route('/endSplit/',methods=['POST'])
