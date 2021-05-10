@@ -64,7 +64,7 @@ def initSplit():
     # On crée le dossier temporaire
     if not os.path.exists(tmpDirName):
         os.makedirs(tmpDirName)
-    return '1'
+    return utils.convToB64(True)
 
 @app.route('/merge/',methods=['POST'])
 def splitN():
@@ -78,7 +78,7 @@ def splitN():
     # On enregistre le contenu reç dans un fichier pickle
     # Le fichier pickle porte le nom du numero de split
     pickle.dump(strToSave, open(pathFile, 'wb'))
-    return '1'
+    return utils.convToB64(True)
 
 @app.route('/endSplit/',methods=['POST'])
 def endSplit():
