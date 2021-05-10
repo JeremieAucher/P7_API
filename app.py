@@ -18,6 +18,7 @@ mo = utils.loadModelLightGBM(formatFile='pkl') # Named mo because a function nam
 cols = utils.loadColumnsOfModel()
 th = 0.50 # Named th because a function named threshold already exists
 txtB64Global = ''
+dictTxtB64Split = {}
 #####################
 
 ### app.route - Start ###
@@ -42,9 +43,11 @@ def ccc():
 @app.route('/initSplit/',methods=['POST'])
 def startSplit():
     global txtB64Global
+    global dictTxtB64Split
     # init txB64Global
     try:
         txtB64Global = ''
+        dictTxtB64Split = {}
         print('Hello world!', file=sys.stderr)
         print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
         return '1'
@@ -54,20 +57,30 @@ def startSplit():
 @app.route('/merge/',methods=['POST'])
 def splitN():
     global txtB64Global
+    global dictTxtB64Split
     print(f'Merge - numSplit={request.values.get("numSplit")}', file=sys.stderr)
-    print(f'Avant traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
+    # print(f'Avant traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     # Recept Split n 
-    txtB64Global += request.values.get('txtSplit')
+    # txtB64Global += request.values.get('txtSplit') # Pas adapté sur Heroku
+    dictTxtB64Split[request.values.get("numSplit")] = request.values.get('txtSplit')
+    
     print(f'Après traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     return '1'
 
 @app.route('/endSplit/',methods=['POST'])
 def endSplit():
     global txtB64Global
+    global dictTxtB64Split
+    
     print('endSplit', file=sys.stderr)
+    
+    # Restore data
+    for i in range(5):
+        txtB64Global += dictTxtB64Split[i]
+    
     print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     
-    # Decode and restor the Data
+    # Decode Data
     dataOneCustomer = utils.restoreFromB64Str(txtB64Global)
     
     # Creation de dfOneCustomer
