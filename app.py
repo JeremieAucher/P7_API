@@ -46,6 +46,7 @@ def startSplit():
     try:
         txtB64Global = ''
         print('Hello world!', file=sys.stderr)
+        print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
         return '1'
     except:
     	return '0'
@@ -63,8 +64,6 @@ def endSplit():
     global txtB64Global
     print('endSplit', file=sys.stderr)
     print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
-    print(f'Len de txtB64Global={len(txtB64Global)}')
-    sys.stdout.flush()
     
     # Decode and restor the Data
     dataOneCustomer = utils.restoreFromB64Str(txtB64Global)
