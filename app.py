@@ -62,7 +62,7 @@ def splitN():
     # print(f'Avant traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     # Recept Split n 
     # txtB64Global += request.values.get('txtSplit') # Pas adapté sur Heroku
-    dictTxtB64Split[request.values.get("numSplit")] = request.values.get('txtSplit')
+    dictTxtB64Split[int(request.values.get("numSplit"))] = request.values.get('txtSplit')
     
     print(f'Après traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     return '1'
@@ -73,6 +73,8 @@ def endSplit():
     global dictTxtB64Split
     
     print('endSplit', file=sys.stderr)
+    
+    
     
     # Restore data
     for i in range(5):
