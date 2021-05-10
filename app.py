@@ -52,7 +52,7 @@ def startSplit():
         print(f'Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
         return '1'
     except:
-    	return '0'
+        return '0'
 
 @app.route('/merge/',methods=['POST'])
 def splitN():
@@ -91,6 +91,20 @@ def endSplit():
     
     # Intérrogation du model et retour des résultats
     return utils.modelPredict(mo,dfOneCustomer,th)
+
+@app.route('/writeFile/',methods=['POST'])
+def writeFile():
+    fp = open("testWrite.txt", 'w')
+    fp.write('Ceci est un test')
+    fp.close()
+    return '1'
+
+@app.route('/readFile/',methods=['POST'])
+def readFile():
+    fp = open("testWrite.txt", 'r')
+    contents = fp.read()
+    print(f'Contenu de testWrite.txt: {contents}', file=sys.stderr)
+    return contents
 
 ### app.route - End ###
 
