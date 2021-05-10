@@ -104,6 +104,7 @@ def writeFile():
 def writeFile2():
     
     # créer le dossier s'il n'existe pas
+    print(f"Dossier TEST existe?: {os.path.exists('TEST')}", file=sys.stderr)
     if not os.path.exists('TEST'):
         os.makedirs('TEST')
     
