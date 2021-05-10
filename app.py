@@ -54,7 +54,7 @@ def startSplit():
 @app.route('/merge/',methods=['POST'])
 def splitN():
     global txtB64Global
-    print(f'Merge - numSplit={request.values.get("txtSplit")}', file=sys.stderr)
+    print(f'Merge - numSplit={request.values.get("numSplit")}', file=sys.stderr)
     print(f'Avant traitement - Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
     # Recept Split n 
     txtB64Global += request.values.get('txtSplit')
