@@ -102,6 +102,11 @@ def writeFile():
 
 @app.route('/writeFile2/',methods=['POST'])
 def writeFile2():
+    
+    # créer le dossier s'il n'existe pas
+    if not os.path.exists('TEST'):
+    os.makedirs('TEST')
+    
     fp = open("/TEST/testWrite.txt", 'w')
     fp.write('Ceci est un second test')
     fp.close()
