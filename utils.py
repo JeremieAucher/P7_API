@@ -9,7 +9,7 @@ import os
 import pickle
 import base64
 import numpy as np
-import urllib.request
+# import urllib.request
 
 
 def modelPredict(model, data, threshold):

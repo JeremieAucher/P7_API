@@ -33,6 +33,10 @@ def lightgbm():
     return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
     # return request.args.get('data_b64_str')
 
+@app.route('/model/',methods=['POST'])
+def model():
+    return utils.loadModelLightGBM(formatFile='b64')
+
 @app.route('/threshold/',methods=['POST'])
 def threshold():
     return utils.convToB64(th)
