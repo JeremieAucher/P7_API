@@ -103,6 +103,8 @@ def writeFile():
 @app.route('/writeFile2/',methods=['POST'])
 def writeFile2():
     
+    print(f"Dossier actuel: {os.getcwd()}", file=sys.stderr)
+    
     # créer le dossier s'il n'existe pas
     print(f"Dossier TEST existe?: {os.path.exists('TEST')}", file=sys.stderr)
     if not os.path.exists('TEST'):
