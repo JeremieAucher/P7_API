@@ -11,6 +11,7 @@ from flask import Flask, request
 import utils
 import pandas as pd
 import sys
+import os
 
 ### Initialisation ###
 app = Flask(__name__)
@@ -99,12 +100,32 @@ def writeFile():
     fp.close()
     return '1'
 
+@app.route('/writeFile2/',methods=['POST'])
+def writeFile2():
+    fp = open("/TEST/testWrite.txt", 'w')
+    fp.write('Ceci est un second test')
+    fp.close()
+    return '1'
+
 @app.route('/readFile/',methods=['POST'])
 def readFile():
     fp = open("testWrite.txt", 'r')
     contents = fp.read()
     print(f'Contenu de testWrite.txt: {contents}', file=sys.stderr)
     return contents
+
+@app.route('/readFile2/',methods=['POST'])
+def readFile2():
+    fp = open("/TEST/testWrite.txt", 'r')
+    contents = fp.read()
+    print(f'Contenu de testWrite.txt: {contents}', file=sys.stderr)
+    return contents
+
+@app.route('/deleteDir/',methods=['POST'])
+def deleteDir():
+    os.rmdir('TEST')
+    return '1'
+
 
 ### app.route - End ###
 
