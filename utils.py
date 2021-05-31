@@ -14,8 +14,8 @@ import numpy as np
 
 def modelPredict(model, data, threshold):
     '''
-        Retourne la prédiction du modèle: 0 ou 1 en fonction du seuil
-        ainsi que la valeur exact de probabilité donné par le modèle.
+        Returns the prediction of the model: 0 or 1 depending on the threshold 
+        and the exact probability value given by the model.
     '''
     
     pP = model.predict_proba(data)[:,0].item()
@@ -31,11 +31,13 @@ def modelPredict(model, data, threshold):
         )
 
 def loadModelLightGBM(formatFile='b64'):
-    # model = pickle.load(open('/pickle/model.pkl', 'rb'))
+    '''
+    Unpickle and load the Machine Learning model 'model.pkl'
+    Depending on the value of <formatFile>:
+        returns the model in its nominal format
+        returns the model converted to base-64 format encoded in UTF-8.
+    '''
     model = pickle.load(open(os.getcwd()+'/pickle/model.pkl', 'rb'))
-    # dir_path = os.path.dirname(os.path.realpath(__file__))
-    # model = pickle.load(open(dir_path+'/pickle/model.pkl', 'rb'))
-    # model = pickle.load(urllib.request.urlopen("https://p7-api-public.s3.eu-west-3.amazonaws.com/model.pkl"))
     
     if formatFile == 'pkl':
         return model
@@ -45,10 +47,25 @@ def loadModelLightGBM(formatFile='b64'):
         return model.class_weight
 
 def loadColumnsOfModel():
+    '''
+    Unpickle and returns the columns expected by 
+    the Machine Learning model used in this project.
+    '''
     return pickle.load(open(os.getcwd()+'/pickle/cols.pkl', 'rb'))    
 
 def convToB64(data):
+    '''
+    As input: <data> of any kind.
+    The function converts the <data> to base-64 then the resulting string is encoded in UTF-8.
+    Output: The result obtained.
+    '''
     return base64.b64encode(pickle.dumps(data)).decode('utf-8')
 
 def restoreFromB64Str(data_b64_str):
+    '''
+    Input: Data converted to Base-64 and then encoded to UTF-8. 
+          Ideally data from the convToB64 function.
+    The function restores the encoded data to its original format.
+    Output: The restored data
+    '''
     return pickle.loads(base64.b64decode(data_b64_str.encode()))

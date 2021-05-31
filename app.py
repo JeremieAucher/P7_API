@@ -31,7 +31,6 @@ tmpDir = formatOsSlash+tmpDirName+formatOsSlash
 @app.route('/lightgbm/',methods=['POST'])
 def lightgbm():
     return utils.modelPredict(mo,utils.restoreFromB64Str(request.args.get('data_b64_str')),th)
-    # return request.args.get('data_b64_str')
 
 @app.route('/model/',methods=['POST'])
 def model():
@@ -45,12 +44,6 @@ def threshold():
 def helloworld():
     return '''<h1>Bienvenue sur la partie API du P7 DataScientist d'OpenClassrooms'</h1>'''
 
-@app.route('/ccc/',methods=['POST'])
-def ccc():
-    return request.values.get('XXX')
-
-
-
 @app.route('/initSplit/',methods=['POST'])
 def initSplit():
     global MYDIR
@@ -58,10 +51,10 @@ def initSplit():
 
     print('initSplit', file=sys.stderr)
 
-    # On Initialise le dossier de destination
-    # On l'efface s'il existe, avec tout ce qu'il contient
+    # Initialize the destination folder
+    # Delete it if it exists, with all that it contains
     shutil.rmtree(tmpDirName, ignore_errors=True)
-    # On crée le dossier temporaire
+    # We create the temporary folder
     if not os.path.exists(tmpDirName):
         os.makedirs(tmpDirName)
     return utils.convToB64(True)
@@ -75,8 +68,8 @@ def splitN():
     
     print(f'Merge - numSplit={request.values.get("numSplit")}', file=sys.stderr)
 
-    # On enregistre le contenu reç dans un fichier pickle
-    # Le fichier pickle porte le nom du numero de split
+    # We save the received content in a pickle file
+    # The pickle file is named after the split number
     pickle.dump(strToSave, open(pathFile, 'wb'))
     return utils.convToB64(True)
 
@@ -92,7 +85,7 @@ def endSplit():
     # Restore data
     for i in range(5):
         pathFile = MYDIR+tmpDir+str(i)+'.pkl'
-        # On ouvre le fichier pickle et on joint son contenu au txt global
+        # We open the pickle file and attach its contents to the global txt
         txtB64Global += pickle.load(open(pathFile, 'rb'))
     
 
@@ -103,13 +96,13 @@ def endSplit():
     # Decode Data
     dataOneCustomer = utils.restoreFromB64Str(txtB64Global)
     
-    # Creation de dfOneCustomer
+    # Creation of dfOneCustomer
     dfOneCustomer = pd.DataFrame(data=dataOneCustomer, columns=cols)
     
-    # Par sécurité on efface le dossier temporaire
+    # For security reasons we delete the temporary folder
     shutil.rmtree(tmpDirName, ignore_errors=True)
     
-    # Intérrogation du model et retour des résultats
+    # Interrogation of the model and return of the results
     return utils.modelPredict(mo,dfOneCustomer,th)
 
 
