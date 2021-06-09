@@ -40,6 +40,14 @@ def model():
 
 @app.route('/ratingSystem/',methods=['POST'])
 def ratingSystem():
+    '''
+    Return the details of the rating system.
+    Input: Nothing
+    Output: 
+    - Minimum score of the scoring system
+    - Maximum score of the rating system
+    - Threshold of the scoring system
+    '''
     print(f'minScore={minScore}', file=sys.stderr)
     print(f'maxScore={maxScore}', file=sys.stderr)
     print(f'th={th}', file=sys.stderr)
@@ -115,141 +123,3 @@ def endSplit():
 
 if __name__ == "__main__":
     app.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @app.route('/initSplit/',methods=['POST'])
-# def startSplit():
-#     global txtB64Global
-#     global dictTxtB64Split
-#     # init txB64Global
-#     try:
-#         txtB64Global = ''
-#         dictTxtB64Split = {}
-#         print('Hello world!', file=sys.stderr)
-#         print(f'Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
-#         return '1'
-#     except:
-#         return '0'
-
-# @app.route('/merge/',methods=['POST'])
-# def splitN():
-#     global txtB64Global
-#     global dictTxtB64Split
-#     print(f'Merge - numSplit={request.values.get("numSplit")}', file=sys.stderr)
-#     print(f'Avant traitement - Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
-#     # Recept Split n 
-#     # txtB64Global += request.values.get('txtSplit') # Pas adapté sur Heroku
-#     n = request.values.get("numSplit")
-#     print(f'numSplit = {n} --- Type numSplit = {type(n)} --- int(numSplit) = {int(n)} --- Type int(numSplit) = {type(int(n))}')
-#     dictTxtB64Split[int(request.values.get("numSplit"))] = request.values.get('txtSplit')
-    
-#     print(f'Après traitement - Keys de dictTxtB64Split={dictTxtB64Split.keys()}', file=sys.stderr)
-#     return '1'
-
-# @app.route('/endSplit/',methods=['POST'])
-# def endSplit():
-#     global txtB64Global
-#     global dictTxtB64Split
-    
-#     print('endSplit', file=sys.stderr)
-#     print(f'Keys de dictTxtB64Split: {dictTxtB64Split.keys()}')
-    
-#     # Restore data
-#     for i in range(5):
-#         txtB64Global += dictTxtB64Split[i]
-    
-#     print(f'Len de txtB64Global={len(txtB64Global)}', file=sys.stderr)
-    
-#     # Decode Data
-#     dataOneCustomer = utils.restoreFromB64Str(txtB64Global)
-    
-#     # Creation de dfOneCustomer
-#     dfOneCustomer = pd.DataFrame(data=dataOneCustomer, columns=cols)
-    
-#     # Intérrogation du model et retour des résultats
-#     return utils.modelPredict(mo,dfOneCustomer,th)
-
-
-# @app.route('/writePkl/',methods=['POST'])
-# def writePkl():
-#     global MYDIR
-#     global tmpDir
-#     pathFile = MYDIR+tmpDir+request.values.get('fileName')+'.pkl'
-    
-#     # Création du dossier
-#     if not os.path.exists(tmpDir.replace('\\','')):
-#         os.makedirs(tmpDir.replace('\\',''))
-    
-#     print(f"Dossier actuel: {os.getcwd()}", file=sys.stderr)
-#     print(f'MYDIR: {MYDIR}', file=sys.stderr)
-    
-#     pdTest = pd.DataFrame({'col1': [1, 2], 'col2': [3, 4]})
-#     pickle.dump(pdTest, open(pathFile, 'wb'))
-    
-#     return '1'
-    
-# @app.route('/sendPkl/',methods=['POST'])
-# def sendPkl():
-#     global MYDIR
-#     global tmpDir
-#     pathFile = MYDIR+tmpDir+request.values.get('fileName')+'.pkl'
-    
-#     pdTest = pickle.load(open(pathFile, 'rb'))
-    
-#     return utils.convToB64(pdTest)
-    
-    
-
-    
-# @app.route('/writeFile/',methods=['POST'])
-# def writeFile():
-#     global MYDIR
-#     global tmpDir
-#     # MYDIR = os.path.dirname(__file__)
-#     print(f"Dossier actuel: {os.getcwd()}", file=sys.stderr)
-#     print(f'MYDIR: {MYDIR}', file=sys.stderr)
-    
-#     # créer le dossier s'il n'existe pas
-#     # print(f"Dossier {tmpDir} existe?: {os.path.exists(tmpDir.replace('\\',''))}", file=sys.stderr)
-#     if not os.path.exists(tmpDir.replace('\\','')):
-#         os.makedirs(tmpDir.replace('\\',''))
-    
-    
-#     # fp = open("/TEST/testWrite.txt", 'w')
-#     fp = open(MYDIR+tmpDir+'testWrite.txt', 'w')
-#     fp.write('Ceci est un second test')
-#     fp.close()
-#     return '1'
-
-
-# @app.route('/readFile/',methods=['POST'])
-# def readFile():
-#     global MYDIR
-#     global tmpDir
-#     # MYDIR = os.path.dirname(__file__)
-#     print(f'MYDIR: {MYDIR}', file=sys.stderr)
-#     fp = open(MYDIR+tmpDir+'testWrite.txt', 'r')
-#     contents = fp.read()
-#     print(f'Contenu de testWrite.txt: {contents}', file=sys.stderr)
-#     return contents
-
-# @app.route('/deleteDir/',methods=['POST'])
-# def deleteDir():
-#     global tmpDir
-#     import shutil
-#     shutil.rmtree(tmpDir.replace('\\', ''), ignore_errors=True)
-#     # os.rmdir('TEST')
-#     return '1'
-
-
