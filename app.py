@@ -19,7 +19,9 @@ import shutil
 app = Flask(__name__)
 mo = utils.loadModelLightGBM(formatFile='pkl') # Named mo because a function named model already exists
 cols = utils.loadColumnsOfModel()
-th = 0.50 # Named th because a function named threshold already exists
+minScore=0
+maxScore=1
+th = 0.52 # Named th because a function named threshold already exists
 MYDIR = os.path.dirname(__file__)
 # formatOsSlash = '\\'
 formatOsSlash = '/'
@@ -36,9 +38,12 @@ def lightgbm():
 def model():
     return utils.loadModelLightGBM(formatFile='b64')
 
-@app.route('/threshold/',methods=['POST'])
-def threshold():
-    return utils.convToB64(th)
+@app.route('/ratingSystem/',methods=['POST'])
+def ratingSystem():
+    print(f'minScore={minScore}', file=sys.stderr)
+    print(f'maxScore={maxScore}', file=sys.stderr)
+    print(f'th={th}', file=sys.stderr)
+    return utils.convToB64((minScore,maxScore,th))
 
 @app.route('/')
 def helloworld():
